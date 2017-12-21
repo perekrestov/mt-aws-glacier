@@ -535,25 +535,25 @@ sub perform_lwp
 				die exception 'lwp_ssl_ca_exception' =>
 					'Can\'t verify SSL peers without knowing which Certificate Authorities to trust. Probably "Mozilla::CA" module is missing';
 			} else {
-				print "PID $$ HTTP connection problem (timeout?). Will retry ($dt seconds spent for request)\n";
+				date_print("PID $$ HTTP connection problem (timeout?). Will retry ($dt seconds spent for request)\n");
 				$self->{last_retry_reason} = 'Internal response';
 				throttle($i);
 			}
 		} elsif ($resp->code =~ /^(500|408)$/) {
-			print "PID $$ HTTP ".$resp->code." This might be normal. Will retry ($dt seconds spent for request)\n";
+			date_print("PID $$ HTTP ".$resp->code." This might be normal. Will retry ($dt seconds spent for request)\n");
 			$self->{last_retry_reason} = $resp->code;
 			throttle($i);
 		} elsif (defined($resp->header('X-Died')) && (get_exception($resp->header('X-Died')))) {
 			die $resp->header('X-Died'); # propogate our own exceptions
 		} elsif (defined($resp->header('X-Died')) && length($resp->header('X-Died'))) {
-			print "PID $$ HTTP connection problem. Will retry ($dt seconds spent for request)\n";
+			date_print("PID $$ HTTP connection problem. Will retry ($dt seconds spent for request)\n");
 			$self->{last_retry_reason} = 'X-Died';
 			throttle($i);
 		} elsif ($resp->code =~ /^2\d\d$/) {
 			if ($self->{writer}) {
 				my ($c, $reason) = $self->{writer}->finish();
 				if ($c eq 'retry') {
-					print "PID $$ HTTP $reason. Will retry ($dt seconds spent for request)\n";
+					date_print("PID $$ HTTP $reason. Will retry ($dt seconds spent for request)\n");
 					$self->{last_retry_reason} = $reason;
 					throttle($i);
 				} elsif ($c ne 'ok') {
@@ -562,7 +562,7 @@ sub perform_lwp
 					return $resp;
 				}
 			} elsif (defined($resp->content_length) && $resp->content_length != length($resp->content)){
-				print "PID $$ HTTP Unexpected end of data. Will retry ($dt seconds spent for request)\n";
+				date_print("PID $$ HTTP Unexpected end of data. Will retry ($dt seconds spent for request)\n");
 				$self->{last_retry_reason}='Unexpected end of data';
 				throttle($i);
 			} else {
@@ -578,7 +578,7 @@ sub perform_lwp
 						my $type = $scalar->{type};
 						my $message = $scalar->{message};
 						if ($code eq 'ThrottlingException') {
-							print "PID $$ ThrottlingException. Will retry ($dt seconds spent for request)\n";
+							date_print("PID $$ ThrottlingException. Will retry ($dt seconds spent for request)\n");
 							$self->{last_retry_reason} = 'ThrottlingException';
 							throttle($i);
 							next;

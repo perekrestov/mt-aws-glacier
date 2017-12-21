@@ -25,6 +25,7 @@ our $VERSION = '1.120';
 use strict;
 use warnings;
 use utf8;
+use POSIX;
 use File::Spec;
 use Cwd;
 use File::stat;
@@ -44,7 +45,7 @@ our @EXPORT = qw/set_filename_encoding get_filename_encoding binaryfilename
 sanity_relative_filename is_relative_filename abs2rel binary_abs_path open_file sysreadfull syswritefull sysreadfull_chk syswritefull_chk
 hex_dump_string is_wide_string
 characterfilename try_drop_utf8_flag dump_request_response file_size file_mtime file_exists file_inodev
-is_64bit_os is_64bit_time is_y2038_supported
+is_64bit_os is_64bit_time is_y2038_supported date_print
 INVENTORY_TYPE_JSON INVENTORY_TYPE_CSV/;
 
 
@@ -384,6 +385,13 @@ sub is_y2038_supported
 		(join(",",gmtime(64063267200)) eq "0,0,0,1,1,2100,2,31,0") &&
 		(join(",",gmtime(2148595200)) eq "0,0,0,1,1,138,1,31,0")
 	} || 0;
+}
+
+sub date_print
+{
+	my ($string) = @_;
+	my $date_time = strftime("%Y-%m-%d %H:%M:%S", gmtime(time()));
+	print "[$date_time] $string";
 }
 
 1;

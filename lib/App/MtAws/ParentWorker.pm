@@ -63,7 +63,7 @@ sub wait_worker
 		$task->{result} = $data;
 		$task->{attachmentref} = $resultattachmentref;
 
-		print "PID $pid $data->{console_out}\n";
+		date_print("PID $pid $data->{console_out}\n");
 
 		$task->{cb_task_proxy}->($data, $resultattachmentref);
 

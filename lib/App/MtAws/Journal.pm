@@ -424,7 +424,7 @@ sub _can_read_filename_for_mode
 		if ($mode->{existing}) {
 			return 'existing';
 		} elsif ($mode->{new}) { # AND not $mode->{existing}
-			print "Skip $relfilename\n";
+			date_print("Skip $relfilename\n");
 			return 0;
 		} else {
 			return 0;
@@ -433,7 +433,7 @@ sub _can_read_filename_for_mode
 		if ($mode->{new}) {
 			return 'new';
 		} elsif ($mode->{existing}) { # AND not $mode->{new}
-			print "Not exists $relfilename\n";
+			date_print("Not exists $relfilename\n");
 			return 0;
 		} else {
 			return 0;

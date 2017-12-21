@@ -194,7 +194,7 @@ sub create_child
 		$disp_select->add($fromchild);
 		$self->{children}->{$pid} = { pid => $pid, fromchild => $fromchild, tochild => $tochild };
 
-		print "PID $pid Started worker\n";
+		date_print("PID $pid Started worker\n");
 		return (0, undef, undef);
 	} elsif (defined ($pid)) { # Child
 		$|=1;

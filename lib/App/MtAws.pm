@@ -110,7 +110,7 @@ sub main
 {
 	$|=1;
 	STDERR->autoflush(1);
-	print "MT-AWS-Glacier, Copyright 2012-2014 Victor Efimov http://mt-aws.com/ Version $VERSION$VERSION_MATURITY\n\n";
+	date_print("MT-AWS-Glacier, Copyright 2012-2014 Victor Efimov http://mt-aws.com/ Version $VERSION$VERSION_MATURITY\n\n");
 
 	warn "**NOT RECOMMENDED FOR PRODUCTION USE UNDER CYGWIN**\n\n" if ($^O eq 'cygwin');
 	die "**DEVELOPMENT VERSION, NOT FOR PRODUCTION USE. EXITING**\n\n" if ($VERSION =~ /_/);
@@ -122,7 +122,7 @@ sub main
 		dump_error(q{});
 		exit(1);
 	}
-	print "OK DONE\n";
+	date_print("OK DONE\n");
 	exit(0);
 }
 
