@@ -390,7 +390,7 @@ sub is_y2038_supported
 sub date_print
 {
 	my ($string) = @_;
-	my $date_time = strftime("%Y-%m-%d %H:%M:%S", gmtime(time()));
+	my $date_time = strftime("%Y-%m-%d %H:%M:%S", localtime(time()));
 	print "[$date_time] $string";
 }
 
